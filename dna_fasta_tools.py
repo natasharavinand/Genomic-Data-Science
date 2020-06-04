@@ -235,18 +235,6 @@ class dna_fasta_tools():
         return protein_sequence
         
         
-    
-    
-    
-
-                    
-dna = dna_fasta_tools("/Users/natasharavinand/Downloads/GDS Python/Python for Genomic Data Science/dna.example.fasta")
-
-
-
-        
-        
-        
         
         
         
