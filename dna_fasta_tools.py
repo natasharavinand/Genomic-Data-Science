@@ -114,22 +114,17 @@ class dna_fasta_tools():
             
             
             
-    def identify_orfs(self, frame, sort=False, *args):
+    def identify_orfs(self, frame, sort=False, seq_id=""):
         '''Identify ORFs (open reading frames) in this file given a reading frame (1, 2, or 3)
         and a sequence dictionary. Returns a dictionary of ORFs with a key of the ORF string
         and the sequence identifier, starting position, length of the ORF, and frame used as a 
-        list value
+        list value. Works only in 5' to 3' direction
         
         "frame" –> reading frame (either 1,2,3) to read the frame in 
-        "sort" –> if true, will print and return a sorted dictionary from greatest to least length in ORF, its
-        sequence identifier, and its starting position
-        "*args" –> If sequence id given, will print the longest ORF with a given sequence identifier, its length, and position
+        "sort" –> if true, will print the greatest to least length in ORF, its sequence identifier, and its starting position
+        "seq_id" –> If sequence id given, will print the longest ORF with a given sequence identifier, its length, and position
         '''
         stop_codons = ['TAA', 'TAG', 'TGA']
-        try:
-            seq_id = args[0]
-        except IndexError:
-            seq_id = None
         orfs = {}
         if frame != 1 and frame != 2 and frame != 3:
             raise ValueError("Please input either 1, 2, or 3 as a reading frame.")
@@ -155,17 +150,17 @@ class dna_fasta_tools():
                 else:
                     continue
         if sort == True:
-            sorted_dictionary = sorted(orfs.items(), key=lambda x:x[1][2], reverse=True)
-            longest_orf = next(iter(sorted_dictionary))
+            sorted_list = sorted(orfs.items(), key=lambda x:x[1][2], reverse=True)
+            longest_orf = next(iter(sorted_list))
             print("The longest ORF in reading frame,", longest_orf[1][3], "is in sequence identifier ", \
                   longest_orf[1][0], "with length", longest_orf[1][2], "in position", longest_orf[1][1], ".\n")
-            return sorted_dictionary
-        if seq_id != None:
-            sorted_dictionary = sorted(orfs.items(), key=lambda x:x[1][2], reverse=True)
-            for val in sorted_dictionary:
-                if val == seq_id:
-                    print("The longest ORF for sequence identifier", seq_id, "is", val, "with length", \
-                          sorted_dictionary[val][2], "starting at position", sorted_dictionary[val][2],".\n")
+        if seq_id != "":
+            sorted_list = sorted(orfs.items(), key=lambda x:x[1][2], reverse=True)
+            for val in sorted_list:
+                if val[1][0] == seq_id:
+                    print("The longest ORF for sequence identifier", val[1][0], "has length", \
+                          val[1][2], "starting at position", val[1][1],".\n") 
+                    break
         return orfs
         
     
@@ -234,9 +229,5 @@ class dna_fasta_tools():
             protein_sequence += protein_element
         return protein_sequence
         
-        
-        
-        
-        
-        
+
         
