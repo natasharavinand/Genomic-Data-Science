@@ -1,4 +1,4 @@
-# Python-for-Genomic-Data-Science
+# Genomic-Data-Science
 
 Compiled code written for the completion of the Genomic Data Science course offered by Johns Hopkins University. The description of the course can be found below:
 
